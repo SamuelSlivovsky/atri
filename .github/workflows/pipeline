@@ -1,0 +1,46 @@
+name: React App CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - feature/*  # Adjust according to your branch strategy
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Specify the Node.js version you want
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Run tests (adjust if you're using a different testing library or command)
+      - name: Run tests
+        run: npm test -- --coverage
+
+      # Build the app
+      - name: Build app
+        run: npm run build
+
+      # Deploy to your hosting service or include any additional steps here
+      # If deploying to GitHub Pages, for example:
+      # - name: Deploy to GitHub Pages
+      #   uses: JamesIves/github-pages-deploy-action@v4
+      #   with:
+      #     branch: gh-pages  # The branch to deploy to
+      #     folder: build     # The folder to deploy from
+
